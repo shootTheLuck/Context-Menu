@@ -1,0 +1,30 @@
+
+.context-menu {
+    display: none;
+    background: rgba(30, 30, 30, 1);
+    /*box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 1);*/
+    position: absolute;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    z-index: 15;
+}
+
+.context-menu-options {
+    list-style: none;
+    color: white;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 5px 40px 5px 10px;
+    cursor: pointer;
+}
+
+.context-menu-options li:hover {
+    background-color: rgba(5, 5, 5, 1);
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.4;
+}
