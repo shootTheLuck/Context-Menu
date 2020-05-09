@@ -5,6 +5,7 @@ var test = document.getElementById("test");
 var feedback = document.getElementById("feedback");
 
 var contextMenu = new ContextMenu({handleMouseEvents: false});
+console.log("contextMenu", contextMenu);
 contextMenu.addMenuOption("Edit");
 contextMenu.addMenuOption("Back");
 contextMenu.addMenuOption("Create");
