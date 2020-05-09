@@ -1,31 +1,34 @@
 
 import ContextMenu from "./ContextMenu.js";
 
-var test = document.getElementById("test");
+var rectangleElement = document.getElementById("rectangle");
+var squareElement = document.getElementById("square");
 var feedback = document.getElementById("feedback");
 
 var contextMenu = new ContextMenu({handleMouseEvents: false});
-console.log("contextMenu", contextMenu);
 contextMenu.addMenuOption("Edit");
 contextMenu.addMenuOption("Back");
 contextMenu.addMenuOption("Create");
+rectangleElement.appendChild(contextMenu);
+
+var target = null;
 
 contextMenu.addEventListener("selection", function(evt) {
     feedback.innerText = "You selected: " + evt.detail.value;
     console.log("contextMenuSelect:", evt.detail.value);
-    if (evt.detail.value === "Edit") {
-        // transformControls.show();
+    if (evt.detail.value === "Change Color") {
+        target.style.backgroundColor = "blue";
     }
 });
 
-test.appendChild(contextMenu);
-
 // use something like this if handleMouseEvents = false
-test.addEventListener("contextmenu", function(evt) {
-    if (evt.ctrlKey) {
-        contextMenu.show(evt, "New Line");
+rectangleElement.addEventListener("contextmenu", function(evt) {
+    if (evt.target === squareElement) {
+        contextMenu.show(evt, "Change Color");
+        target = squareElement;
     } else {
         contextMenu.show(evt);
+        target = null;
     }
 });
 
@@ -37,13 +40,3 @@ document.addEventListener("keydown", function(evt) {
         contextMenu.disableItem("Create");
     }
 });
-
-document.addEventListener("mousedown", function(evt) {
-    // alert();
-    // console.log("mousedown");
-});
-
-
-
-
-
