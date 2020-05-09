@@ -1,6 +1,6 @@
 
 import ContextMenu from "./ContextMenu.js";
-
+alert();
 var test = document.getElementById("test");
 var feedback = document.getElementById("feedback");
 
