@@ -19,7 +19,7 @@ contextMenu.addMenuOption("Back");
 contextMenu.addMenuOption("Create");
 
 // append to page element 
-// note: document.body element will only be as large as it's children
+// note: document.body element will only be as large as its children
 rectangleElement.appendChild(contextMenu);
 
 // listen for events
