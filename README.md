@@ -23,8 +23,10 @@ contextMenu.addEventListener("selection", function(evt) {
 ```
 
 ## More complex case with dynamic menu options or decision making:
-create instance with option autoDisplay set to false
 ```javascript
+// create instance with autoDisplay set to false
+var contextMenu = new ContextMenu({autoDisplay: false});
+
 // add menu options
 contextMenu.addMenuOption("Edit");
 contextMenu.addMenuOption("Back");
