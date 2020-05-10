@@ -1,5 +1,5 @@
 ## What is this?
-A ContextMenu class made using the Custom Elements API and vanilla javascript.
+A ContextMenu class made using vanilla Javascript and the Custom Elements API. 
 
 [Live Demo Here](https://shootTheLuck.github.io/Context-Menu)
 
