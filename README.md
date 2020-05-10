@@ -1,5 +1,7 @@
 ## What is this?
-An HTML5 custom element for use as a context menu.  I'm sure this wheel has been reinvented several times(!).
+An HTML5 custom element for displaying a context menu.  I'm sure this wheel has been reinvented several times(!).
+
+[Live Demo Here](https://shootTheLuck.github.io/Context-Menu)
 
 ## How do I use it?
 
