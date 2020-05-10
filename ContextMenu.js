@@ -5,7 +5,15 @@ class ContextMenu extends HTMLElement {
 
     constructor(opts = {}) {
         super();
-        this.event = new CustomEvent("selection", {detail: {value: null}});
+
+        this.rightClickEvent = new CustomEvent("rightClick", {
+            detail: {value: null},
+        });
+
+        this.selectionEvent = new CustomEvent("selection", {
+            detail: {value: null},
+        });
+
         this.className = "context-menu";
 
         this.menuOptions = document.createElement("UL");
@@ -13,8 +21,8 @@ class ContextMenu extends HTMLElement {
         this.appendChild(this.menuOptions);
 
         this.previousFocusedElement = document.activeElement;
-        this.handleMouseEvents =
-                (opts.handleMouseEvents !== undefined) ? opts.handleMouseEvents : true;
+        this.autoDisplay =
+                (opts.autoDisplay !== undefined) ? opts.autoDisplay : true;
 
         document.addEventListener("keydown", (evt) => {
             if (evt.key === "Escape") {
@@ -23,7 +31,9 @@ class ContextMenu extends HTMLElement {
         });
 
         document.addEventListener("contextmenu", (evt) => {
-            if (this.handleMouseEvents) {
+            this.rightClickEvent.detail.value = evt;
+            this.dispatchEvent(this.rightClickEvent);
+            if (this.autoDisplay) {
                 this.show(evt);
             }
         });
@@ -38,8 +48,9 @@ class ContextMenu extends HTMLElement {
             evt.stopPropagation();
             if (evt.target.tagName === "LI") {
                 var selectedValue = evt.target.innerHTML;
-                this.event.detail.value = selectedValue;
-                this.dispatchEvent(this.event);
+                this.selectionEvent.detail.value = selectedValue;
+                this.selectionEvent.detail.initialClick = this.rightClickEvent.detail.value;
+                this.dispatchEvent(this.selectionEvent);
                 this.hide();
             }
         });
@@ -57,6 +68,8 @@ class ContextMenu extends HTMLElement {
     }
 
     show(evt, specialLineItem) {
+        // this.rightClickEvent.detail.click = evt;
+        // this.dispatchEvent(this.rightClickEvent);
 
         let rect = this.parentElement.getBoundingClientRect();
         let x = evt.clientX;
