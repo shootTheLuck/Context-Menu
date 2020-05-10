@@ -25,20 +25,15 @@ contextMenu.addEventListener("selection", function(evt) {
 ## More complex case with dynamic menu options or decision making:
 create instance with option autoDisplay set to false
 ```javascript
-var contextMenu = new ContextMenu({autoDisplay: false});
-```
-add menu options
-```javascript
+// add menu options
 contextMenu.addMenuOption("Edit");
 contextMenu.addMenuOption("Back");
 contextMenu.addMenuOption("Create");
-```
-append to page
-```javascript
+
+// append to page
 rectangleElement.appendChild(contextMenu);
-```
-listen for rightClick event and show context menu manually based on app logic
-```javascript
+
+// listen for rightClick event and show context menu manually based on app logic
 contextMenu.addEventListener("rightClick", function(evt) {
     let targetElement = evt.detail.value.target;
     if (targetElement === squareElement) {
@@ -47,14 +42,12 @@ contextMenu.addEventListener("rightClick", function(evt) {
         contextMenu.show(evt.detail.value);
     }
 });
-```
-listen for user selection as before
-```javascript
+
+// listen for user selection as before
 contextMenu.addEventListener("selection", function(evt) {
     let selectedValue = evt.detail.value;
     let targetElement = evt.detail.initialClick.target;
     console.log("contextMenu selection:", selectedValue);
     console.log("contextMenu original target:", targetElement);
 });
-
 ```
