@@ -7,6 +7,9 @@ An HTML5 custom element for displaying a context menu.  I'm sure this wheel has 
 
 Simple case with static menu options:
 ```javascript
+// import
+import ContextMenu from "./ContextMenu.js";
+
 // create instance
 var contextMenu = new ContextMenu();
 
