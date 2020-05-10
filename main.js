@@ -5,7 +5,7 @@ var rectangleElement = document.getElementById("rectangle");
 var squareElement = document.getElementById("square");
 var feedback = document.getElementById("feedback");
 
-var contextMenu = new ContextMenu({autoDisplay: true});
+var contextMenu = new ContextMenu({autoDisplay: false});
 contextMenu.addMenuOption("Edit");
 contextMenu.addMenuOption("Back");
 contextMenu.addMenuOption("Create");
