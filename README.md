@@ -2,26 +2,28 @@
 
 ## Simple case usage with static menu options:
 
+create instance
 ```
-// create instance
 var contextMenu = new ContextMenu();
-
-// add menu options
+```
+add menu options
+```
 contextMenu.addMenuOption("Edit");
 contextMenu.addMenuOption("Back");
 contextMenu.addMenuOption("Create");
-
-// append to page
+```
+append to page
+```
 rectangleElement.appendChild(contextMenu);
-
-// listen for events
+```
+listen for events
+```
 contextMenu.addEventListener("selection", function(evt) {
     let selectedValue = evt.detail.value;
     let targetElement = evt.detail.initialClick.target;
     console.log("contextMenu selection:", selectedValue);
     console.log("contextMenu original target:", targetElement);
 });
-
 ```
 
 ## More complex case with dynamic menu options or decision making:
