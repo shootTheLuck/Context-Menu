@@ -1,6 +1,9 @@
-# Custom HTML5 Context Menu ...
+## What is this?
+An HTML5 custom element for use as a context menu.  I'm sure this wheel has been reinvented several times(!).
 
-## Simple case usage with static menu options:
+## How do I use it?
+
+### Simple case with static menu options:
 ```javascript
 // create instance
 var contextMenu = new ContextMenu();
@@ -22,7 +25,7 @@ contextMenu.addEventListener("selection", function(evt) {
 });
 ```
 
-## More complex case with dynamic menu options or decision making:
+### More complex case with dynamic menu options or decision making:
 ```javascript
 // create instance with autoDisplay set to false
 var contextMenu = new ContextMenu({autoDisplay: false});
