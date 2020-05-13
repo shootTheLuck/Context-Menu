@@ -24,7 +24,7 @@
     background-color: rgba(5, 5, 5, 1);
 }
 
-.disabled {
+.context-menu-options li[disabled] {
     pointer-events: none;
     opacity: 0.4;
 }
