@@ -147,14 +147,14 @@ class ContextMenu extends HTMLElement {
     enableAllItems() {
         for (let i = 0; i < this.menuOptions.children.length; i++) {
             let child = this.menuOptions.children[i];
-            child.classList.remove("disabled");
+            child.removeAttribute("disabled");
         }
     }
 
     disableItem(name) {
         let menuItem = this.findMenuOption(name);
         if (menuItem) {
-            menuItem.classList.toggle("disabled");
+            menuItem.toggleAttribute("disabled");
         }
     }
 }
