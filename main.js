@@ -17,6 +17,7 @@ contextMenu.addEventListener("rightClick", function(evt) {
     let targetElement = evt.detail.value.target;
     console.log("contextMenu right click on html target:", targetElement);
     if (targetElement === squareElement) {
+        contextMenu.disableItem("Edit");
         contextMenu.show(evt.detail.value, "Change Color");
     } else {
         contextMenu.show(evt.detail.value);
