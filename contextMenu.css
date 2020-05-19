@@ -11,6 +11,12 @@
     z-index: 15;
 }
 
+/* don't show dotted lines when focused */
+context-menu:focus {
+    outline: 0;
+    border: 0;
+}
+
 .context-menu-options {
     list-style: none;
     color: white;
