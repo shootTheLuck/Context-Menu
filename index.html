@@ -39,12 +39,15 @@
 
     <div id="feedback"></div>
 
-    <script type="module">  
+    <script type="module">
         import ContextMenu from "./ContextMenu.js";
 
         var rectangleElement = document.getElementById("rectangle");
         var squareElement = document.getElementById("square");
         var feedback = document.getElementById("feedback");
+
+        // instantiate and append to DOM
+        // autoDisplay: false to make adjustments to menu before showing
 
         var contextMenu = new ContextMenu({autoDisplay: false});
         contextMenu.addMenuOption("Edit");
@@ -52,10 +55,14 @@
         contextMenu.addMenuOption("Create");
         rectangleElement.appendChild(contextMenu);
 
-        // use something like this if handleMouseEvents = false
+        // if autodisplay = false, listen for rightclick event from contextMenu:
+
         contextMenu.addEventListener("rightClick", function(evt) {
+
+            // make decisions on what to show in the menu based on target
+            // before displaying:
+
             let targetElement = evt.detail.value.target;
-            console.log("contextMenu right click on html target:", targetElement);
             if (targetElement === squareElement) {
                 contextMenu.disableItem("Edit");
                 contextMenu.show(evt.detail.value, "Change Color");
@@ -64,7 +71,8 @@
             }
         });
 
-        // use something like this if handleMouseEvents = false
+        // or listen for contextmenu event on page element:
+
         // rectangleElement.addEventListener("contextmenu", function(evt) {
             // if (evt.target === squareElement) {
                 // contextMenu.show(evt, "Change Color");
@@ -73,14 +81,13 @@
             // }
         // });
 
+        // listen to selection event to find out what was selected
+
         contextMenu.addEventListener("selection", function(evt) {
             let selectedValue = evt.detail.value;
-            let targetElement = evt.detail.initialClick.target;
-
             feedback.innerText = "You selected: " + selectedValue;
-            console.log("contextMenu selection:", selectedValue);
-            console.log("contextMenu original target:", targetElement);
 
+            let targetElement = evt.detail.initialClick.target;
             if (targetElement === squareElement && selectedValue === "Change Color") {
                 targetElement.style.backgroundColor = "blue";
             }
