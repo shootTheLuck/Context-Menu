@@ -19,7 +19,6 @@
             height: 100px;
             border: 2px solid black;
             position: absolute;
-            background: red;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -34,7 +33,7 @@
     </div>
     <div id="rectangle">
         <div id="instructions">Right-click anywhere inside me for context menu..</div>
-        <div id="square"></div>
+        <div id="square" style="background: red"></div>
     </div>
 
     <div id="feedback"></div>
@@ -89,7 +88,12 @@
 
             let targetElement = evt.detail.initialClick.target;
             if (targetElement === squareElement && selectedValue === "Change Color") {
-                targetElement.style.backgroundColor = "blue";
+                let color = targetElement.style.backgroundColor;
+                if (color === "red") {
+                    targetElement.style.backgroundColor = "blue";
+                } else {
+                    targetElement.style.backgroundColor = "red";
+                }
             }
         });
 
