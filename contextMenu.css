@@ -12,18 +12,24 @@
 }
 
 /* don't show dotted lines when focused */
-context-menu:focus {
+.context-menu:focus {
     outline: 0;
     border: 0;
 }
 
 .context-menu-options {
+    list-style-type: none;
     list-style: none;
     color: white;
     font-weight: 500;
     font-size: 14px;
-    padding: 5px 40px 5px 10px;
+    padding: 5px 40px 5px 0px;
+    width: 100%;
     cursor: pointer;
+}
+
+.context-menu-options li {
+    padding-left: 10px;
 }
 
 .context-menu-options li:hover {
