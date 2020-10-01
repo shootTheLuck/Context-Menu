@@ -166,4 +166,4 @@ class ContextMenu extends HTMLElement {
 
 customElements.define("context-menu", ContextMenu);
 
-export default ContextMenu;
+export {ContextMenu};
