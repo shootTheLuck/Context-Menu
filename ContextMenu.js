@@ -1,6 +1,9 @@
 
 // TODO: assign all opts at top
 
+// ContextMenu.  Will display all assigned menuitems automatically if
+// autoDisplay is not set to false
+
 class ContextMenu extends HTMLElement {
 
     constructor(opts = {}) {
