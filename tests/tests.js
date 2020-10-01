@@ -1,5 +1,5 @@
 
-import ContextMenu from "../ContextMenu.js";
+import {ContextMenu} from "../ContextMenu.js";
 
 QUnit.test( "testing QUnit", function( assert ) {
   assert.ok( 1 == "1", "Passed!" );
@@ -48,7 +48,7 @@ QUnit.module("Context Menu", function(hooks) {
         assert.equal(menuOption.innerText, "testOption", "testing that menu can add option");
 
         this.cMenu.disableItem("testOption");
-        assert.equal(menuOption.getAttribute("disabled"), "", "testing that menu can disable option");
+        assert.equal(menuOption.getAttribute("disabled"), "true", "testing that menu can disable option");
 
         this.cMenu.enableAllItems();
         assert.equal(menuOption.getAttribute("disabled"), null, "testing that menu can enable option");
