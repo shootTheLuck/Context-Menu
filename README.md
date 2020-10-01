@@ -1,5 +1,5 @@
 ## What is this?
-A ContextMenu class made using vanilla Javascript and the Custom Elements API. 
+A ContextMenu class made using vanilla Javascript and the Custom Elements API.
 
 [Live Demo Here](https://shootTheLuck.github.io/Context-Menu)
 
@@ -8,7 +8,7 @@ A ContextMenu class made using vanilla Javascript and the Custom Elements API.
 Simple case with static menu options:
 ```javascript
 // import
-import ContextMenu from "./ContextMenu.js";
+import {ContextMenu} from "./ContextMenu.js";
 
 // create instance
 var contextMenu = new ContextMenu();
@@ -18,7 +18,7 @@ contextMenu.addMenuOption("Edit");
 contextMenu.addMenuOption("Back");
 contextMenu.addMenuOption("Create");
 
-// append to page element 
+// append to page element
 // note: document.body element will only be as large as its children
 rectangleElement.appendChild(contextMenu);
 
