@@ -34,6 +34,7 @@ class ContextMenu extends HTMLElement {
         });
 
         document.addEventListener("contextmenu", (evt) => {
+            evt.preventDefault();
             this.rightClickEvent.detail.value = evt;
             this.dispatchEvent(this.rightClickEvent);
             if (this.autoDisplay) {
