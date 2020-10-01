@@ -158,7 +158,8 @@ class ContextMenu extends HTMLElement {
     disableItem(name) {
         let menuItem = this.findMenuOption(name);
         if (menuItem) {
-            menuItem.toggleAttribute("disabled");
+            // menuItem.toggleAttribute("disabled");
+            menuItem.setAttribute('disabled', true)
         }
     }
 }
