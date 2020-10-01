@@ -44,13 +44,13 @@ class ContextMenu extends HTMLElement {
 
         this.menuOptions.addEventListener("mousedown", (evt) => {
             evt.stopPropagation();
-            document.removeEventListener("mousedown", this.outsideClickHandler);
+            // document.removeEventListener("mousedown", this.outsideClickHandler);
         });
 
         this.menuOptions.addEventListener("click", (evt) => {
             evt.preventDefault();
             evt.stopPropagation();
-            if (evt.target.tagName === "LI") {
+            if (evt.target.tagName === "LI"&& !evt.target.getAttribute("disabled")) {
                 var selectedValue = evt.target.innerHTML;
                 this.selectionEvent.detail.value = selectedValue;
                 this.selectionEvent.detail.initialClick = this.rightClickEvent.detail.value;
