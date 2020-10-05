@@ -25,7 +25,9 @@
     font-size: 14px;
     padding: 5px 40px 5px 0px;
     width: 100%;
+/*
     cursor: pointer;
+*/
 }
 
 .context-menu-options li {
@@ -37,8 +39,5 @@
 }
 
 .context-menu-options li[disabled] {
-/*
-    pointer-events: none;
-*/
     opacity: 0.4;
 }
