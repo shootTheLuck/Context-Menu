@@ -34,11 +34,22 @@ class ContextMenu extends HTMLElement {
         });
 
         document.addEventListener("contextmenu", (evt) => {
-            evt.preventDefault();
-            this.rightClickEvent.detail.value = evt;
-            this.dispatchEvent(this.rightClickEvent);
-            if (this.autoDisplay) {
-                this.show(evt);
+
+            /* ignore right-click on contextmenu itself */
+            let ownElements = [...this.querySelectorAll("*")];
+            if (ownElements.includes(evt.target)) {
+                evt.preventDefault();
+                return;
+            }
+
+            let targets = [...this.parentElement.querySelectorAll("*")];
+            if (evt.target === this.parentElement || targets.includes(evt.target)) {
+                evt.preventDefault();
+                this.rightClickEvent.detail.value = evt;
+                this.dispatchEvent(this.rightClickEvent);
+                if (this.autoDisplay) {
+                    this.show(evt);
+                }
             }
         });
 
@@ -78,8 +89,8 @@ class ContextMenu extends HTMLElement {
         let rect = this.parentElement.getBoundingClientRect();
         let x = evt.clientX;
         let y = evt.clientY;
-        if (x > rect.left && x < rect.right &&
-            y > rect.top && y < rect.bottom) {
+        // if (x > rect.left && x < rect.right &&
+            // y > rect.top && y < rect.bottom) {
             evt.preventDefault();
             evt.stopPropagation();
 
@@ -94,7 +105,7 @@ class ContextMenu extends HTMLElement {
             document.addEventListener("mousedown", this.outsideClickHandler);
             this.previousFocusedElement = document.activeElement;
             this.focus();
-        }
+        // }
     }
 
     hide() {
