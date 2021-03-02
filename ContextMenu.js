@@ -23,7 +23,7 @@ class ContextMenu extends HTMLElement {
         this.menuOptions.className = "context-menu-options";
         this.appendChild(this.menuOptions);
 
-        this.previousFocusedElement = document.activeElement;
+        this.previousFocusedElement = null;
         this.autoDisplay =
                 (opts.autoDisplay !== undefined) ? opts.autoDisplay : true;
 
@@ -83,29 +83,39 @@ class ContextMenu extends HTMLElement {
     }
 
     show(evt, specialLineItem) {
-        // this.rightClickEvent.detail.click = evt;
-        // this.dispatchEvent(this.rightClickEvent);
 
-        let rect = this.parentElement.getBoundingClientRect();
+        evt.preventDefault();
+        evt.stopPropagation();
         let x = evt.clientX;
         let y = evt.clientY;
-        // if (x > rect.left && x < rect.right &&
-            // y > rect.top && y < rect.bottom) {
-            evt.preventDefault();
-            evt.stopPropagation();
 
-            this.removeMenuOptionByClass("special");
-            this.hidden = false;
-            this.style.display = "block";
-            this.style.left = x - rect.left + "px";
-            this.style.top = y - rect.top + "px";
-            if (specialLineItem) {
-                this.addMenuOption(specialLineItem, "special");
-            }
-            document.addEventListener("mousedown", this.outsideClickHandler);
-            this.previousFocusedElement = document.activeElement;
-            this.focus();
-        // }
+        this.removeMenuOptionByClass("special");
+
+        if (specialLineItem) {
+            this.addMenuOption(specialLineItem, "special");
+        }
+
+        this.hidden = false;
+        this.style.display = "block";
+
+        let rect = this.getBoundingClientRect();
+        let parentRect = this.parentElement.getBoundingClientRect();
+        let sWidth = window.innerWidth;
+        let sHeight = window.innerHeight;
+
+        if (x + rect.width > sWidth) {
+            x -= rect.width;
+        }
+        this.style.left = x - parentRect.left + "px";
+
+        if (y + rect.height > sHeight) {
+            y -= rect.height;
+        }
+        this.style.top = y - parentRect.top + "px";
+
+        document.addEventListener("mousedown", this.outsideClickHandler);
+        this.previousFocusedElement = document.activeElement;
+        this.focus();
     }
 
     hide() {
@@ -170,7 +180,7 @@ class ContextMenu extends HTMLElement {
         let menuItem = this.findMenuOption(name);
         if (menuItem) {
             // menuItem.toggleAttribute("disabled");
-            menuItem.setAttribute('disabled', true)
+            menuItem.setAttribute('disabled', true);
         }
     }
 }
