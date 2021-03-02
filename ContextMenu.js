@@ -123,7 +123,9 @@ class ContextMenu extends HTMLElement {
         this.style.display = "none";
         this.enableAllItems();
         document.removeEventListener("mousedown", this.outsideClickHandler);
-        this.previousFocusedElement.focus();
+        if (this.previousFocusedElement) {
+            this.previousFocusedElement.focus();
+        }
     }
 
     findMenuOption(text) {
