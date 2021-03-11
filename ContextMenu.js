@@ -1,6 +1,4 @@
 
-// TODO: assign all opts at top
-
 // ContextMenu.  Will display all assigned menuitems automatically if
 // autoDisplay is not set to false
 
@@ -8,6 +6,16 @@ class ContextMenu extends HTMLElement {
 
     constructor(opts = {}) {
         super();
+
+        const defaults = {
+            className: "context-menu",
+            autoDisplay: true,
+            tabIndex: 0
+        };
+
+        this.className = opts.className !== undefined? opts.className: defaults.className;
+        this.autoDisplay = opts.autoDisplay !== undefined? opts.autoDisplay : defaults.autoDisplay;
+        this.tabIndex = opts.tabIndex !== undefined? opts.tabIndex : defaults.tabIndex;
 
         this.rightClickEvent = new CustomEvent("rightClick", {
             detail: {value: null},
@@ -17,15 +25,11 @@ class ContextMenu extends HTMLElement {
             detail: {value: null},
         });
 
-        this.className = "context-menu";
-
         this.menuOptions = document.createElement("UL");
         this.menuOptions.className = "context-menu-options";
         this.appendChild(this.menuOptions);
 
         this.previousFocusedElement = null;
-        this.autoDisplay =
-                (opts.autoDisplay !== undefined) ? opts.autoDisplay : true;
 
         document.addEventListener("keydown", (evt) => {
             if (evt.key === "Escape") {
@@ -72,8 +76,6 @@ class ContextMenu extends HTMLElement {
 
         this.hidden = true;
         this.outsideClickHandler = this.handleOutsideClick.bind(this);
-
-        this.tabIndex = opts.tabIndex || 0;
     }
 
     handleOutsideClick(evt) {
