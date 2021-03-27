@@ -37,7 +37,7 @@ class ContextMenu extends HTMLElement {
             }
         });
 
-        document.addEventListener("contextmenu", (evt) => {
+        document.body.addEventListener("contextmenu", (evt) => {
 
             /* ignore right-click on contextmenu itself */
             let ownElements = [...this.querySelectorAll("*")];

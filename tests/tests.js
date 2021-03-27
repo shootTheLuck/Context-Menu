@@ -23,12 +23,12 @@ QUnit.module("Context Menu", function(hooks) {
     });
 
     QUnit.test("shows upon right click", function(assert) {
-        document.dispatchEvent(new MouseEvent("contextmenu", {clientX: 100, clientY: 100}));
+        document.body.dispatchEvent(new MouseEvent("contextmenu", {clientX: 100, clientY: 100}));
         assert.equal(this.cMenu.hidden, false, "expect .hidden to be false");
     });
 
     QUnit.test("hides on click outside", function(assert) {
-        document.dispatchEvent(new MouseEvent("mousedown", {clientX: 100, clientY: 100}));
+        document.body.dispatchEvent(new MouseEvent("mousedown", {clientX: 100, clientY: 100}));
         assert.equal(this.cMenu.hidden, true, "expect .hidden to be true");
     });
 
@@ -48,7 +48,7 @@ QUnit.module("Context Menu", function(hooks) {
         assert.equal(menuOption.innerText, "testOption", "testing that menu can add option");
 
         this.cMenu.disableItem("testOption");
-        assert.equal(menuOption.getAttribute("disabled"), "true", "testing that menu can disable option");
+        assert.equal(menuOption.getAttribute("disabled"), "true", "testing that menu can find and disable option");
 
         this.cMenu.enableAllItems();
         assert.equal(menuOption.getAttribute("disabled"), null, "testing that menu can enable option");
