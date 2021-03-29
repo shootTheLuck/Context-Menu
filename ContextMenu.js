@@ -26,7 +26,6 @@ class ContextMenu extends HTMLElement {
         });
 
         this.menuOptions = document.createElement("UL");
-        this.menuOptions.className = "context-menu-options";
         this.appendChild(this.menuOptions);
 
         this.previousFocusedElement = null;

@@ -17,7 +17,7 @@
     border: 0;
 }
 
-.context-menu-options {
+.context-menu ul {
     list-style-type: none;
     list-style: none;
     color: white;
@@ -30,14 +30,14 @@
 */
 }
 
-.context-menu-options li {
+.context-menu li {
     padding-left: 10px;
 }
 
-.context-menu-options li:hover {
+.context-menu li:hover {
     background-color: rgba(5, 5, 5, 1);
 }
 
-.context-menu-options li[disabled] {
+.context-menu li[disabled] {
     opacity: 0.4;
 }
