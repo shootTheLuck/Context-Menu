@@ -8,7 +8,7 @@ class ContextMenu extends HTMLElement {
         super();
 
         const defaults = {
-            className: "context-menu",
+            className: "contextMenu",
             autoDisplay: true,
             tabIndex: 0
         };
