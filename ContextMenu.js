@@ -1,6 +1,6 @@
 
 // ContextMenu.  Will display all assigned menuitems automatically if
-// autoDisplay is not set to false
+// autoDisplay option is not set to false
 
 class ContextMenu extends HTMLElement {
 
@@ -17,18 +17,12 @@ class ContextMenu extends HTMLElement {
         this.autoDisplay = opts.autoDisplay !== undefined? opts.autoDisplay : defaults.autoDisplay;
         this.tabIndex = opts.tabIndex !== undefined? opts.tabIndex : defaults.tabIndex;
 
-        this.rightClickEvent = new CustomEvent("rightClick", {
-            detail: {value: null},
-        });
-
-        this.selectionEvent = new CustomEvent("selection", {
-            detail: {value: null},
-        });
-
         this.menuOptions = document.createElement("UL");
         this.appendChild(this.menuOptions);
 
         this.previousFocusedElement = null;
+        this.selectedElement = null;
+        this.selection = null;
 
         document.addEventListener("keydown", (evt) => {
             if (evt.key === "Escape") {
@@ -36,51 +30,33 @@ class ContextMenu extends HTMLElement {
             }
         });
 
-        document.body.addEventListener("contextmenu", (evt) => {
-
-            /* ignore right-click on contextmenu itself */
-            let ownElements = [...this.querySelectorAll("*")];
-            if (ownElements.includes(evt.target)) {
-                evt.preventDefault();
-                return;
-            }
-
-            let targets = [...this.parentElement.querySelectorAll("*")];
-            if (evt.target === this.parentElement || targets.includes(evt.target)) {
-                evt.preventDefault();
-                this.rightClickEvent.detail.value = evt;
-                this.dispatchEvent(this.rightClickEvent);
-                if (this.autoDisplay) {
-                    this.show(evt);
-                }
-            }
-        });
-
-        this.menuOptions.addEventListener("mousedown", (evt) => {
-            evt.stopPropagation();
-            // document.removeEventListener("mousedown", this.outsideClickHandler);
-        });
-
         this.menuOptions.addEventListener("click", (evt) => {
+
+            if (evt.target.tagName === "LI" && !evt.target.getAttribute("disabled")) {
+                this.selection = evt.target.innerHTML;
+            }
+            this.hide();
+        });
+
+        this.menuOptions.addEventListener("contextmenu", (evt) => {
             evt.preventDefault();
             evt.stopPropagation();
-            if (evt.target.tagName === "LI"&& !evt.target.getAttribute("disabled")) {
-                var selectedValue = evt.target.innerHTML;
-                this.selectionEvent.detail.value = selectedValue;
-                this.selectionEvent.detail.initialClick = this.rightClickEvent.detail.value;
-                this.dispatchEvent(this.selectionEvent);
-                this.hide();
-            }
         });
 
         this.hidden = true;
-        this.outsideClickHandler = this.handleOutsideClick.bind(this);
+
+        this.addEventListener("focusout", (evt) => {
+            this.hide();
+        });
+
     }
 
-    handleOutsideClick(evt) {
-        if (evt.target !== this.menuOptions) {
-            this.hide();
-        }
+    connectedCallback() {
+        document.body.addEventListener("contextmenu", (evt) => {
+            if (this.autoDisplay) {
+                this.show(evt);
+            }
+        });
     }
 
     show(evt, specialLineItem) {
@@ -97,6 +73,7 @@ class ContextMenu extends HTMLElement {
         }
 
         this.hidden = false;
+        this.selection = null;
         this.style.display = "block";
 
         let rect = this.getBoundingClientRect();
@@ -114,7 +91,7 @@ class ContextMenu extends HTMLElement {
         }
         this.style.top = y - parentRect.top + "px";
 
-        document.addEventListener("mousedown", this.outsideClickHandler);
+        this.selectedElement = evt.target;
         this.previousFocusedElement = document.activeElement;
         this.focus();
     }
@@ -123,7 +100,7 @@ class ContextMenu extends HTMLElement {
         this.hidden = true;
         this.style.display = "none";
         this.enableAllItems();
-        document.removeEventListener("mousedown", this.outsideClickHandler);
+
         if (this.previousFocusedElement) {
             this.previousFocusedElement.focus();
         }
@@ -179,11 +156,17 @@ class ContextMenu extends HTMLElement {
         }
     }
 
+    enableItem(name) {
+        let menuItem = this.findMenuOption(name);
+        if (menuItem) {
+            menuItem.removeAttribute("disabled");
+        }
+    }
+
     disableItem(name) {
         let menuItem = this.findMenuOption(name);
         if (menuItem) {
-            // menuItem.toggleAttribute("disabled");
-            menuItem.setAttribute('disabled', true);
+            menuItem.setAttribute("disabled", true);
         }
     }
 }
