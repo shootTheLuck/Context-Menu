@@ -44,8 +44,8 @@ const rectangleElement = document.getElementById("rectangle");
 const squareElement = document.getElementById("square");
 rectangleElement.appendChild(contextMenu);
 
-// listen for listen for contextmenu event from page element.
-// and show context menu manually based on app logic
+// listen for contextmenu event from page element to
+// show different menu items for different page elements
 rectangleElement.addEventListener("contextmenu", (evt) => {
     let targetElement = evt.target;
     if (targetElement === squareElement) {

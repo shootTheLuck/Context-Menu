@@ -31,7 +31,6 @@ class ContextMenu extends HTMLElement {
         });
 
         this.menuOptions.addEventListener("click", (evt) => {
-
             if (evt.target.tagName === "LI" && !evt.target.getAttribute("disabled")) {
                 this.selection = evt.target.innerHTML;
             }
