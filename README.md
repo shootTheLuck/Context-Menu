@@ -11,7 +11,7 @@ Simple case with static menu options:
 import {ContextMenu} from "./ContextMenu.js";
 
 // create instance
-var contextMenu = new ContextMenu();
+const contextMenu = new ContextMenu();
 
 // add menu options
 contextMenu.addMenuOption("Edit");
@@ -20,14 +20,12 @@ contextMenu.addMenuOption("Create");
 
 // append to page element
 // note: document.body element will only be as large as its children
-rectangleElement.appendChild(contextMenu);
+document.getElementById("rectangle").appendChild(contextMenu);
 
 // listen for events
-contextMenu.addEventListener("selection", function(evt) {
-    let selectedValue = evt.detail.value;
-    let targetElement = evt.detail.initialClick.target;
-    console.log("contextMenu selection:", selectedValue);
-    console.log("contextMenu original target:", targetElement);
+contextMenu.addEventListener("click", function(evt) {
+    console.log("contextMenu selection: " + contextMenu.selection);
+    console.log("contextMenu selected element:", contextMenu.selectedElement);
 });
 ```
 
