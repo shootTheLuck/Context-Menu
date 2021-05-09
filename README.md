@@ -32,7 +32,7 @@ contextMenu.addEventListener("click", function(evt) {
 More complex case with dynamic menu options or decision making:
 ```javascript
 // create instance with autoDisplay set to false
-var contextMenu = new ContextMenu({autoDisplay: false});
+const contextMenu = new ContextMenu({autoDisplay: false});
 
 // add menu options
 contextMenu.addMenuOption("Edit");
@@ -40,23 +40,25 @@ contextMenu.addMenuOption("Back");
 contextMenu.addMenuOption("Create");
 
 // append to page
+const rectangleElement = document.getElementById("rectangle");
+const squareElement = document.getElementById("square");
 rectangleElement.appendChild(contextMenu);
 
-// listen for rightClick event and show context menu manually based on app logic
-contextMenu.addEventListener("rightClick", function(evt) {
-    let targetElement = evt.detail.value.target;
+// listen for listen for contextmenu event from page element.
+// and show context menu manually based on app logic
+rectangleElement.addEventListener("contextmenu", (evt) => {
+    let targetElement = evt.target;
     if (targetElement === squareElement) {
-        contextMenu.show(evt.detail.value, "Change Color");
+        contextMenu.disableItem("Edit");
+        contextMenu.show(evt, "Change Color");
     } else {
-        contextMenu.show(evt.detail.value);
+        contextMenu.show(evt);
     }
 });
 
 // listen for user selection as before
-contextMenu.addEventListener("selection", function(evt) {
-    let selectedValue = evt.detail.value;
-    let targetElement = evt.detail.initialClick.target;
-    console.log("contextMenu selection:", selectedValue);
-    console.log("contextMenu original target:", targetElement);
+contextMenu.addEventListener("click", function(evt) {
+    console.log("contextMenu selection: " + contextMenu.selection);
+    console.log("contextMenu selected element:", contextMenu.selectedElement);
 });
 ```
