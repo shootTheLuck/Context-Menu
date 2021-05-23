@@ -106,8 +106,7 @@ class ContextMenu extends HTMLElement {
     }
 
     findMenuOption(text) {
-        for (let i = 0; i < this.menuOptions.children.length; i++) {
-            let child = this.menuOptions.children[i];
+        for (const child of this.menuOptions.children) {
             if (child.textContent === text) {
                 return child;
             }
@@ -149,8 +148,7 @@ class ContextMenu extends HTMLElement {
     }
 
     enableAllItems() {
-        for (let i = 0; i < this.menuOptions.children.length; i++) {
-            let child = this.menuOptions.children[i];
+        for (const child of this.menuOptions.children) {
             child.removeAttribute("disabled");
         }
     }
