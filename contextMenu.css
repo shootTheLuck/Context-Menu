@@ -14,7 +14,7 @@
     color: white;
     font-weight: 500;
     font-size: 14px;
-    padding: 5px 40px 5px 0px;
+    padding: 5px 0px 5px 0px;
 }
 
 /* don't show dotted lines when focused */
@@ -23,21 +23,9 @@
     border: 0;
 }
 
-.contextMenu ul {
-    list-style-type: none;
-    list-style: none;
-    color: white;
-    font-weight: 500;
-    font-size: 14px;
-    padding: 5px 40px 5px 0px;
-    width: 100%;
-/*
-    cursor: pointer;
-*/
-}
-
 .contextMenu li {
     padding-left: 10px;
+    padding-right: 40px;
 }
 
 .contextMenu li:hover {

@@ -20,26 +20,27 @@ class ContextMenu extends HTMLUListElement {
         this.previousFocusedElement = null;
         this.selectedElement = null;
         this.selection = null;
-
-        document.addEventListener("keydown", (evt) => {
-            if (evt.key === "Escape") {
-                this.hide();
-            }
-        });
+        this.selectionDisabled = null;
+        this.hidden = true;
+        this.selectionEvent = new Event("selection");
 
         this.addEventListener("click", (evt) => {
-            if (evt.target.tagName === "LI" && !evt.target.getAttribute("disabled")) {
-                this.selection = evt.target.innerHTML;
+            if (evt.target.tagName === "LI") {
+                if (evt.target.getAttribute("disabled")) {
+                    this.selectionDisabled = evt.target.innerHTML;
+                } else {
+                    this.selection = evt.target.innerHTML;
+                    this.selectionDisabled = null;
+                }
+                this.dispatchEvent(this.selectionEvent);
+                this.hide();
             }
-            this.hide();
         });
 
         this.addEventListener("contextmenu", (evt) => {
             evt.preventDefault();
             evt.stopPropagation();
         });
-
-        this.hidden = true;
 
         this.addEventListener("focusout", (evt) => {
             this.hide();
@@ -53,6 +54,12 @@ class ContextMenu extends HTMLUListElement {
                 this.show(evt);
             }
         });
+
+        document.addEventListener("keydown", (evt) => {
+            if (evt.key === "Escape") {
+                this.hide();
+            }
+        });
     }
 
     show(evt, specialLineItem) {
@@ -62,10 +69,10 @@ class ContextMenu extends HTMLUListElement {
         let x = evt.clientX;
         let y = evt.clientY;
 
-        this.removeMenuOptionByClass("special");
+        this.removeItemByClass("special");
 
         if (specialLineItem) {
-            this.addMenuOption(specialLineItem, "special");
+            this.addItem(specialLineItem, "special");
         }
 
         this.hidden = false;
@@ -102,7 +109,7 @@ class ContextMenu extends HTMLUListElement {
         }
     }
 
-    findMenuOption(text) {
+    findItem(text) {
         for (const child of this.children) {
             if (child.textContent === text) {
                 return child;
@@ -110,7 +117,7 @@ class ContextMenu extends HTMLUListElement {
         }
     }
 
-    addMenuOption(name, className) {
+    addItem(name, className) {
         var newElement = document.createElement("LI");
         newElement.textContent = name;
 
@@ -126,22 +133,22 @@ class ContextMenu extends HTMLUListElement {
         return newElement;
     }
 
-    removeMenuOption(name) {
-        let menuItem = this.findMenuOption(name);
+    removeItem(name) {
+        let menuItem = this.findItem(name);
         if (menuItem) {
             this.removeChild(menuItem);
         }
     }
 
-    removeMenuOptionByClass(className) {
+    removeItemByClass(className) {
         var elements = this.querySelectorAll("." + className);
         for (let i = elements.length; i--;) {
             this.removeChild(elements[i]);
         }
     }
 
-    resetToDefaultLineItems() {
-        this.removeMenuOptionByClass("special");
+    resetToDefaultItems() {
+        this.removeItemByClass("special");
     }
 
     enableAllItems() {
@@ -151,14 +158,14 @@ class ContextMenu extends HTMLUListElement {
     }
 
     enableItem(name) {
-        let menuItem = this.findMenuOption(name);
+        let menuItem = this.findItem(name);
         if (menuItem) {
             menuItem.removeAttribute("disabled");
         }
     }
 
     disableItem(name) {
-        let menuItem = this.findMenuOption(name);
+        let menuItem = this.findItem(name);
         if (menuItem) {
             menuItem.setAttribute("disabled", true);
         }

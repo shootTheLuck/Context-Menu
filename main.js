@@ -11,9 +11,9 @@ var feedback = document.getElementById("feedback");
 
 var contextMenu = new ContextMenu({autoDisplay: false});
 // var contextMenu = new ContextMenu();
-contextMenu.addMenuOption("Edit");
-contextMenu.addMenuOption("Back");
-contextMenu.addMenuOption("Create");
+contextMenu.addItem("Edit");
+contextMenu.addItem("Back");
+contextMenu.addItem("Create");
 rectangleElement.appendChild(contextMenu);
 
 // If autodisplay = false, listen for contextmenu event from page element.
@@ -30,9 +30,18 @@ rectangleElement.addEventListener("contextmenu", (evt) => {
     }
 });
 
-// Listen for click event to get contextMenu selection.
+// Listen for click event or "selection" event to get contextMenu selection.
 
 contextMenu.addEventListener("click", function(evt) {
+
+    // handle disabled selection
+    let selectionDisabled = contextMenu.selectionDisabled;
+    if (selectionDisabled) {
+        feedback.innerText = `The option "${selectionDisabled}" is not available for the red square.`;
+        return;
+    }
+
+    // handle selection
     let selection = contextMenu.selection;
     feedback.innerText = "You selected: " + selection;
 
@@ -48,9 +57,13 @@ contextMenu.addEventListener("click", function(evt) {
 });
 
 document.addEventListener("keydown", function(evt) {
+
+    // menu items can be removed
     if (evt.key === "t") {
-        contextMenu.removeMenuOption("Create");
+        contextMenu.removeItem("Create");
     }
+
+    // menu items can be disabled temporarily
     if (evt.key === "m") {
         contextMenu.disableItem("Create");
     }
