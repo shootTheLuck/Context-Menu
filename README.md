@@ -14,9 +14,9 @@ import {ContextMenu} from "./ContextMenu.js";
 const contextMenu = new ContextMenu();
 
 // add menu options
-contextMenu.addMenuOption("Edit");
-contextMenu.addMenuOption("Back");
-contextMenu.addMenuOption("Create");
+contextMenu.addItem("Edit");
+contextMenu.addItem("Back");
+contextMenu.addItem("Create");
 
 // append to page element
 // note: document.body element will only be as large as its children
@@ -35,9 +35,9 @@ More complex case with dynamic menu options or decision making:
 const contextMenu = new ContextMenu({autoDisplay: false});
 
 // add menu options
-contextMenu.addMenuOption("Edit");
-contextMenu.addMenuOption("Back");
-contextMenu.addMenuOption("Create");
+contextMenu.addItem("Edit");
+contextMenu.addItem("Back");
+contextMenu.addItem("Create");
 
 // append to page
 const rectangleElement = document.getElementById("rectangle");
