@@ -2,7 +2,7 @@
 // ContextMenu.  Will display all assigned menuitems automatically if
 // autoDisplay option is not set to false
 
-class ContextMenu extends HTMLElement {
+class ContextMenu extends HTMLUListElement {
 
     constructor(opts = {}) {
         super();
@@ -17,9 +17,6 @@ class ContextMenu extends HTMLElement {
         this.autoDisplay = opts.autoDisplay !== undefined? opts.autoDisplay : defaults.autoDisplay;
         this.tabIndex = opts.tabIndex !== undefined? opts.tabIndex : defaults.tabIndex;
 
-        this.menuOptions = document.createElement("UL");
-        this.appendChild(this.menuOptions);
-
         this.previousFocusedElement = null;
         this.selectedElement = null;
         this.selection = null;
@@ -30,14 +27,14 @@ class ContextMenu extends HTMLElement {
             }
         });
 
-        this.menuOptions.addEventListener("click", (evt) => {
+        this.addEventListener("click", (evt) => {
             if (evt.target.tagName === "LI" && !evt.target.getAttribute("disabled")) {
                 this.selection = evt.target.innerHTML;
             }
             this.hide();
         });
 
-        this.menuOptions.addEventListener("contextmenu", (evt) => {
+        this.addEventListener("contextmenu", (evt) => {
             evt.preventDefault();
             evt.stopPropagation();
         });
@@ -106,7 +103,7 @@ class ContextMenu extends HTMLElement {
     }
 
     findMenuOption(text) {
-        for (const child of this.menuOptions.children) {
+        for (const child of this.children) {
             if (child.textContent === text) {
                 return child;
             }
@@ -122,9 +119,9 @@ class ContextMenu extends HTMLElement {
         }
 
         if (className === "special") {
-            this.menuOptions.prepend(newElement);
+            this.prepend(newElement);
         } else {
-            this.menuOptions.appendChild(newElement);
+            this.appendChild(newElement);
         }
         return newElement;
     }
@@ -132,14 +129,14 @@ class ContextMenu extends HTMLElement {
     removeMenuOption(name) {
         let menuItem = this.findMenuOption(name);
         if (menuItem) {
-            this.menuOptions.removeChild(menuItem);
+            this.removeChild(menuItem);
         }
     }
 
     removeMenuOptionByClass(className) {
         var elements = this.querySelectorAll("." + className);
         for (let i = elements.length; i--;) {
-            this.menuOptions.removeChild(elements[i]);
+            this.removeChild(elements[i]);
         }
     }
 
@@ -148,7 +145,7 @@ class ContextMenu extends HTMLElement {
     }
 
     enableAllItems() {
-        for (const child of this.menuOptions.children) {
+        for (const child of this.children) {
             child.removeAttribute("disabled");
         }
     }
@@ -168,6 +165,6 @@ class ContextMenu extends HTMLElement {
     }
 }
 
-customElements.define("context-menu", ContextMenu);
+customElements.define("context-menu", ContextMenu, {extends: "ul"});
 
 export {ContextMenu};
