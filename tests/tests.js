@@ -32,26 +32,26 @@ QUnit.module("Context Menu", function(hooks) {
         assert.equal(this.cMenu.hidden, true, "expect .hidden to be true");
     });
 
-    QUnit.test("adding and removing options", function(assert) {
-        this.cMenu.addMenuOption("testOption");
-        let menuOption = this.cMenu.menuOptions.children[0];
-        assert.equal(menuOption.innerText, "testOption", "testing that menu can add option");
+    QUnit.test("adding and removing items", function(assert) {
+        this.cMenu.addItem("testOption");
+        let menuItem = this.cMenu.children[0];
+        assert.equal(menuItem.innerText, "testOption", "testing that menu can add item");
 
-        this.cMenu.removeMenuOption("testOption");
-        menuOption = this.cMenu.menuOptions.children[0];
-        assert.equal(menuOption, null, "testing that menu can remove option");
+        this.cMenu.removeItem("testOption");
+        menuItem = this.cMenu.children[0];
+        assert.equal(menuItem, null, "testing that menu can remove item");
     });
 
-    QUnit.test("disabling and enabling an option", function(assert) {
-        this.cMenu.addMenuOption("testOption");
-        let menuOption = this.cMenu.menuOptions.children[0];
-        assert.equal(menuOption.innerText, "testOption", "testing that menu can add option");
+    QUnit.test("disabling and enabling an item", function(assert) {
+        this.cMenu.addItem("testOption");
+        let menuItem = this.cMenu.children[0];
+        assert.equal(menuItem.innerText, "testOption", "testing that menu can add item");
 
         this.cMenu.disableItem("testOption");
-        assert.equal(menuOption.getAttribute("disabled"), "true", "testing that menu can find and disable option");
+        assert.equal(menuItem.getAttribute("disabled"), "true", "testing that menu can find and disable item");
 
         this.cMenu.enableAllItems();
-        assert.equal(menuOption.getAttribute("disabled"), null, "testing that menu can enable option");
+        assert.equal(menuItem.getAttribute("disabled"), null, "testing that menu can enable item");
     });
 
 });
