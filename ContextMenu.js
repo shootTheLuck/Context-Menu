@@ -69,7 +69,7 @@ class ContextMenu extends HTMLUListElement {
         let x = evt.clientX;
         let y = evt.clientY;
 
-        this.removeItemByClass("special");
+        this.removeItemsByClass("special");
 
         if (specialLineItem) {
             this.addItem(specialLineItem, "special");
@@ -110,64 +110,64 @@ class ContextMenu extends HTMLUListElement {
     }
 
     findItem(text) {
-        for (const child of this.children) {
-            if (child.textContent === text) {
-                return child;
+        for (const item of this.children) {
+            if (item.textContent === text) {
+                return item;
             }
         }
     }
 
     addItem(name, className) {
-        var newElement = document.createElement("LI");
-        newElement.textContent = name;
+        const item = document.createElement("LI");
+        item.textContent = name;
 
         if (typeof className === "string") {
-            newElement.classList.add(className);
+            item.classList.add(className);
         }
 
         if (className === "special") {
-            this.prepend(newElement);
+            this.prepend(item);
         } else {
-            this.appendChild(newElement);
+            this.appendChild(item);
         }
-        return newElement;
+        return item;
     }
 
     removeItem(name) {
-        let menuItem = this.findItem(name);
-        if (menuItem) {
-            this.removeChild(menuItem);
+        const item = this.findItem(name);
+        if (item) {
+            this.removeChild(item);
         }
     }
 
-    removeItemByClass(className) {
-        var elements = this.querySelectorAll("." + className);
-        for (let i = elements.length; i--;) {
-            this.removeChild(elements[i]);
+    removeItemsByClass(className) {
+        var itemsWithClass = this.querySelectorAll("." + className);
+        for (const item of itemsWithClass) {
+            this.removeChild(item);
         }
     }
 
     resetToDefaultItems() {
-        this.removeItemByClass("special");
+        this.removeItemsByClass("special");
     }
 
     enableAllItems() {
-        for (const child of this.children) {
-            child.removeAttribute("disabled");
+        for (const item of this.children) {
+            item.removeAttribute("disabled");
         }
     }
 
     enableItem(name) {
-        let menuItem = this.findItem(name);
-        if (menuItem) {
-            menuItem.removeAttribute("disabled");
+        const item = this.findItem(name);
+        if (item) {
+            item.removeAttribute("disabled");
         }
     }
 
     disableItem(name) {
-        let menuItem = this.findItem(name);
-        if (menuItem) {
-            menuItem.setAttribute("disabled", true);
+        const item = this.findItem(name);
+        if (item) {
+            item.setAttribute("disabled", true);
         }
     }
 }
