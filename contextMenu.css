@@ -1,7 +1,15 @@
 
 .contextMenu {
+
+    /* theme overridable variables */
+    --contextMenu-background-color: rgba(30, 30, 30, 1);
+    --contextMenu-border-color: rgb(32, 32, 32);
+    --contextMenu-border-radius: 0;
+    --contextMenu--color: white;
+    --contextMenu-font-family: inherit;
+
     display: none;
-    background: rgba(30, 30, 30, 1);
+    background-color: var(--theme-contextMenu-background-color, var(--contextMenu-background-color));
     /*box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 1);*/
     position: absolute;
     -webkit-user-select: none;
@@ -11,7 +19,7 @@
     z-index: 15;
     list-style-type: none;
     list-style: none;
-    color: white;
+    color: var(--theme-contextMenu-color, var(--contextMenu-color));
     font-weight: 500;
     font-size: 14px;
     padding: 5px 0px 5px 0px;
