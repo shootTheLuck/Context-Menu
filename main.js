@@ -8,9 +8,8 @@ var feedback = document.getElementById("feedback");
 
 // Instantiate and append to DOM.
 // Set autoDisplay to false to make adjustments to menu before showing.
-
-var contextMenu = new ContextMenu({autoDisplay: false});
-// var contextMenu = new ContextMenu();
+// The rectangle element has style "position: absolute" so set positionedFromParent to true
+var contextMenu = new ContextMenu({autoDisplay: false, positionedFromParent: true});
 contextMenu.addItem("Edit");
 contextMenu.addItem("Back");
 contextMenu.addItem("Create");
@@ -19,7 +18,6 @@ rectangleElement.appendChild(contextMenu);
 // If autodisplay = false, listen for contextmenu event from page element.
 // Make decisions on what to show in the menu based on event target
 // before displaying.
-
 rectangleElement.addEventListener("contextmenu", (evt) => {
     let targetElement = evt.target;
     if (targetElement === squareElement) {
@@ -30,14 +28,17 @@ rectangleElement.addEventListener("contextmenu", (evt) => {
     }
 });
 
-// Listen for click event or "selection" event to get contextMenu selection.
+// Listen for click event or "selection" event to get contextMenu selection
+// and use selection (or selectionDisabled) as required:
 
+var squareColor = "red";
 contextMenu.addEventListener("click", function(evt) {
 
     // handle disabled selection
     let selectionDisabled = contextMenu.selectionDisabled;
     if (selectionDisabled) {
-        feedback.innerText = `The option "${selectionDisabled}" is not available for the red square.`;
+        feedback.innerText =
+                `The option "${selectionDisabled}" is not available for the ${squareColor} square.`;
         return;
     }
 
@@ -49,21 +50,30 @@ contextMenu.addEventListener("click", function(evt) {
     if (targetElement === squareElement && selection === "Change Color") {
         let color = targetElement.style.backgroundColor;
         if (color === "red") {
+            squareColor = "blue";
             targetElement.style.backgroundColor = "blue";
         } else {
+            squareColor = "red";
             targetElement.style.backgroundColor = "red";
         }
     }
 });
 
-document.addEventListener("keydown", function(evt) {
+var loremIpsum2 = document.getElementById("lorem-ipsum2");
+loremIpsum2.style.color = "blue";
 
-    // menu items can be removed
+var contextMenu2 = new ContextMenu();
+contextMenu2.addItem("wow");
+contextMenu2.addItem("great");
+loremIpsum2.appendChild(contextMenu2);
+
+
+// menu items can be removed or disabled temporarily
+document.body.addEventListener("keydown", function(evt) {
     if (evt.key === "t") {
         contextMenu.removeItem("Create");
     }
 
-    // menu items can be disabled temporarily
     if (evt.key === "m") {
         contextMenu.disableItem("Create");
     }
