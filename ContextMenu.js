@@ -10,12 +10,15 @@ class ContextMenu extends HTMLUListElement {
         const defaults = {
             className: "contextMenu",
             autoDisplay: true,
-            tabIndex: 0
+            tabIndex: 0,
+            positionedFromParent: false,
         };
 
         this.className = opts.className !== undefined? opts.className: defaults.className;
         this.autoDisplay = opts.autoDisplay !== undefined? opts.autoDisplay : defaults.autoDisplay;
         this.tabIndex = opts.tabIndex !== undefined? opts.tabIndex : defaults.tabIndex;
+        this.positionedFromParent = opts.positionedFromParent !== undefined?
+                opts.positionedFromParent : defaults.positionedFromParent;
 
         this.previousFocusedElement = null;
         this.selectedElement = null;
@@ -49,7 +52,7 @@ class ContextMenu extends HTMLUListElement {
     }
 
     connectedCallback() {
-        document.body.addEventListener("contextmenu", (evt) => {
+        this.parentElement.addEventListener("contextmenu", (evt) => {
             if (this.autoDisplay) {
                 this.show(evt);
             }
@@ -75,10 +78,6 @@ class ContextMenu extends HTMLUListElement {
             this.addItem(specialLineItem, "special");
         }
 
-        this.hidden = false;
-        this.selection = null;
-        this.style.display = "block";
-
         let rect = this.getBoundingClientRect();
         let parentRect = this.parentElement.getBoundingClientRect();
         let sWidth = window.innerWidth;
@@ -87,13 +86,22 @@ class ContextMenu extends HTMLUListElement {
         if (x + rect.width > sWidth) {
             x -= rect.width;
         }
-        this.style.left = x - parentRect.left + "px";
 
         if (y + rect.height > sHeight) {
             y -= rect.height;
         }
-        this.style.top = y - parentRect.top + "px";
 
+        if (this.positionedFromParent) {
+            this.style.left = x - parentRect.left + "px";
+            this.style.top = y - parentRect.top + "px";
+        } else {
+            this.style.left = x  + "px";
+            this.style.top = y + window.scrollY + "px";
+        }
+
+        this.hidden = false;
+        this.selection = null;
+        this.style.display = "block";
         this.selectedElement = evt.target;
         this.previousFocusedElement = document.activeElement;
         this.focus();
