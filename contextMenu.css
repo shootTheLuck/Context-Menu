@@ -1,44 +1,70 @@
 
 .contextMenu {
 
-    /* theme overridable variables */
-    --contextMenu-background-color: rgba(30, 30, 30, 1);
-    --contextMenu-border-color: rgb(32, 32, 32);
-    --contextMenu-border-radius: 0;
-    --contextMenu-color: white;
-    --contextMenu-font-family: inherit;
+    /* theme overridable variables
+     * replace "--" with "--contextMenu-"
+     */
+
+    --background-color: rgba(30, 30, 30, 1);
+
+    --border-color: inherit;
+    --border-radius: 0;
+    --border-width: 0;
+    --box-shadow: none;
+
+    --item-color: white;
+    --item-color-hover: white;
+    --item-background-hover: rgba(5, 5, 5, 1);
+    --item-font-family: Helvetica, sans-serif;
+    --item-font-size: 14px;
 
     display: none;
-    background-color: var(--theme-contextMenu-background-color, var(--contextMenu-background-color));
-    /*box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 1);*/
+    background-color:
+            var(--contextMenu-background-color, var(--background-color));
+    border-style: solid;
+    border-width: var(--contextMenu-border-width, var(--border-width));
+    border-color: var(--contextMenu-border-color, var(--border-color));
+    border-radius: var(--contextMenu-border-radius, var(--border-radius));
+    box-shadow: var(--contextMenu-box-shadow, var(--box-shadow));
+    color: var(--contextMenu-item-color, var(--item-color));
+    font-family: var(--contextMenu-item-font-family, var(--item-font-family));
+    font-size: var(--contextMenu-item-font-size, var(--item-font-size));
+
     position: absolute;
+    user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none;
     z-index: 15;
-    list-style-type: none;
     list-style: none;
-    color: var(--theme-contextMenu-color, var(--contextMenu-color));
-    font-weight: 500;
-    font-size: 14px;
-    padding: 5px 0px 5px 0px;
+    padding: 0;
     margin: 0;
 }
 
 /* don't show dotted lines when focused */
 .contextMenu:focus {
     outline: 0;
+/*
     border: 0;
+*/
 }
 
 .contextMenu li {
-    padding-left: 10px;
-    padding-right: 40px;
+    padding: 3px 2em 2px 1em;
+}
+
+.contextMenu li:first-child {
+    padding-top: 5px;
+}
+
+.contextMenu li:last-child {
+    padding-bottom: 5px;
 }
 
 .contextMenu li:hover {
-    background-color: rgba(5, 5, 5, 1);
+    color: var(--contextMenu-item-color-hover, var(--item-color-hover));
+    background:
+            var(--contextMenu-item-background-hover, var(--item-background-hover));
 }
 
 .contextMenu li[disabled] {
