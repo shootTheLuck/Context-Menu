@@ -1,5 +1,5 @@
 
-// ContextMenu.  Will display all assigned menuitems automatically if
+// ContextMenu. Will display all assigned menuitems automatically if
 // autoDisplay option is not set to false
 
 class ContextMenu extends HTMLUListElement {
@@ -21,22 +21,38 @@ class ContextMenu extends HTMLUListElement {
                 opts.positionedFromParent : defaults.positionedFromParent;
 
         this.previousFocusedElement = null;
-        this.selectedElement = null;
-        this.selection = null;
-        this.selectionDisabled = null;
+        this.targetElement = null;
+        this.itemSelected = null;
+        this.itemDisabled = null;
+        this.itemHovered = null;
         this.hidden = true;
-        this.selectionEvent = new Event("selection");
+
+        this.itemSelectedEvent = new Event("itemSelected");
+        this.itemDisabledEvent = new Event("itemDisabled");
+        this.itemHoveredEvent = new Event("itemHovered");
 
         this.addEventListener("click", (evt) => {
             if (evt.target.tagName === "LI") {
                 if (evt.target.getAttribute("disabled")) {
-                    this.selectionDisabled = evt.target.innerHTML;
+                    this.itemSelected = null;
+                    this.itemDisabled = evt.target.innerHTML;
+                    this.itemDisabledEvent.value = evt.target.innerText;
+                    this.dispatchEvent(this.itemDisabledEvent);
                 } else {
-                    this.selection = evt.target.innerHTML;
-                    this.selectionDisabled = null;
+                    this.itemDisabled = null;
+                    this.itemSelected = evt.target.innerHTML;
+                    this.itemSelectedEvent.value = evt.target.innerText;
+                    this.dispatchEvent(this.itemSelectedEvent);
                 }
-                this.dispatchEvent(this.selectionEvent);
                 this.hide();
+            }
+        });
+
+        this.addEventListener("mouseover", (evt) => {
+            if (evt.target.tagName === "LI" && this.itemHovered !== evt.target.innerHTML) {
+                this.itemHovered = evt.target.innerHTML;
+                this.itemHoveredEvent.value = evt.target.textContent;
+                this.dispatchEvent(this.itemHoveredEvent);
             }
         });
 
@@ -57,7 +73,6 @@ class ContextMenu extends HTMLUListElement {
                 this.show(evt);
             }
         });
-
         document.addEventListener("keydown", (evt) => {
             if (evt.key === "Escape") {
                 this.hide();
@@ -100,9 +115,10 @@ class ContextMenu extends HTMLUListElement {
         }
 
         this.hidden = false;
-        this.selection = null;
+        this.itemHovered = null;
+        this.itemSelected = null;
         this.style.display = "block";
-        this.selectedElement = evt.target;
+        this.targetElement = evt.target;
         this.previousFocusedElement = document.activeElement;
         this.focus();
     }
@@ -138,6 +154,7 @@ class ContextMenu extends HTMLUListElement {
         } else {
             this.appendChild(item);
         }
+
         return item;
     }
 
